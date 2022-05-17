@@ -9,9 +9,6 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             atorbar(),
-            const Divider(
-              thickness: 1,
-            ),
             imagem(),
           ],
         ),
@@ -41,14 +38,15 @@ Widget imagem() {
       child: Column(children: [
     Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(55),
-        border: Border.all(color: Colors.black, width: 6),
-      ),
+          //borderRadius: BorderRadius.circular(55),
+          //border: Border.all(color: Colors.black, width: 6),
+          ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(49),
         child: Image.asset(
           'assets/images/ceu_estrela.jpeg',
-          width: 300,
+          width: 400,
+          height: 400,
         ),
       ),
     ),
