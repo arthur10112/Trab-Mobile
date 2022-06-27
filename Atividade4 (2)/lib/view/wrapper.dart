@@ -49,19 +49,23 @@ class WrapperState extends State<Wrapper> {
               floatingActionButton: FloatingActionButton(
                   onPressed: () {
                     BlocProvider.of<AuthBloc>(context).add(Logout());
+                    /*Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddNote(),
+                        ));*/
                   },
-                  child: const Icon(Icons.logout)),
+                  //child: const Icon(Icons.logout)),
+                  child: const Icon(Icons.add_rounded)),
               appBar: AppBar(
                   // Here we take the value from the MyHomePage object that was created by
                   // the App.build method, and use it to set our appbar title.
                   title: const Text("RepArt"),
                   bottom: const TabBar(
                     tabs: [
+                      Tab(icon: Icon(Icons.home)),
+                      Tab(icon: Icon(Icons.add_rounded)),
                       Tab(icon: Icon(Icons.account_circle)),
-                      Tab(icon: Icon(Icons.account_circle)),
-                      //
-                      //Tab(icon: Icon(Icons.directions)),
-                      Tab(icon: Icon(Icons.ac_unit))
                     ],
                   )),
               body: MultiBlocProvider(
@@ -73,8 +77,8 @@ class WrapperState extends State<Wrapper> {
                   children: [
                     //Home(),
                     ListNote(),
-                    Profile(),
                     AddNote(),
+                    Profile(),
                   ],
                 ),
               ),
