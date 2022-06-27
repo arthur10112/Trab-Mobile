@@ -15,17 +15,17 @@ class FirestoreServer {
   // uid do usuário logado
   String? uid;
 
-  // Ponto de acesso com o servidor
-  final CollectionReference noteCollection = FirebaseFirestore.instance.collection("notes");
-
+  // Ponto de acesso com o servidor                                               aqui era notes
+  final CollectionReference noteCollection = FirebaseFirestore.instance.collection("Obras");
+  //uid virou fotos                           my_notes virou Feed
   Future<Note> getNote(noteId) async {
-    DocumentSnapshot doc = await noteCollection.doc(uid).collection("my_notes").doc(noteId).get();
+    DocumentSnapshot doc = await noteCollection.doc("fotos").collection("feed").doc(noteId).get();
     Note note = Note.fromMap(doc.data());
     return note;
   }
 
   Future<int> insertNote(Note note) async {
-    DocumentReference ref = await noteCollection.doc(uid).collection("my_notes").add({
+    DocumentReference ref = await noteCollection.doc("fotos").collection("feed").add({
       "Nome da Obra": note.nomeobra,
       "description": note.description
     });
@@ -34,7 +34,7 @@ class FirestoreServer {
       if (task != null) {
         final snapshot = await task.whenComplete(() {});
         final urlDownload = await snapshot.ref.getDownloadURL();
-        await noteCollection.doc(uid).collection("my_notes").doc(ref.id).update({
+        await noteCollection.doc("fotos").collection("feed").doc(ref.id).update({
           "Nome da Obra": note.nomeobra,
           "description": note.description,
           "path": urlDownload
@@ -55,7 +55,7 @@ class FirestoreServer {
       }
     }
 
-    await noteCollection.doc(uid).collection("my_notes").doc(noteId).update({
+    await noteCollection.doc("fotos").collection("feed").doc(noteId).update({
       "Nome da Obra": note.nomeobra,
       "description": note.description,
       "path": note.path
@@ -65,7 +65,7 @@ class FirestoreServer {
 
   Future<int> deleteNote(noteId) async {
     StorageServer.helper.deleteImage(uid!, noteId);
-    await noteCollection.doc(uid).collection("my_notes").doc(noteId).delete();
+    await noteCollection.doc("fotos").collection("feed").doc(noteId).delete();
     return 42;
   }
 
@@ -79,12 +79,12 @@ class FirestoreServer {
   }
 
   Future<NoteCollection> getNoteList() async {
-    QuerySnapshot snapshot = await noteCollection.doc(uid).collection("my_notes").get();
+    QuerySnapshot snapshot = await noteCollection.doc("fotos").collection("feed").get();
 
     return _noteListFromSnapshot(snapshot);
   }
 
   Stream get stream {
-    return noteCollection.doc(uid).collection("my_notes").snapshots().map(_noteListFromSnapshot);
+    return noteCollection.doc("fotos").collection("feed").snapshots().map(_noteListFromSnapshot);
   }
 }
